@@ -63,7 +63,7 @@ public class BaseActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<JsonObject> getCharacters = mMarvelAPI.getCharacters(100,0,null,null,null,null,null,null);
+                Call<JsonObject> getCharacters = mMarvelAPI.getCharacters(100,0);
                 getCharacters.enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

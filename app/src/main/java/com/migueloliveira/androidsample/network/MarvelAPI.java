@@ -1,6 +1,7 @@
 package com.migueloliveira.androidsample.network;
 
 import com.google.gson.JsonObject;
+import com.migueloliveira.androidsample.utils.Constants;
 
 import org.json.JSONObject;
 
@@ -17,18 +18,41 @@ import retrofit2.http.Query;
 public interface MarvelAPI {
     @GET("/v1/public/characters")
     Call<JsonObject> getCharacters(
-            @Query("limit") int limit,
-            @Query("offset") int offset,
-            @Query("name") String name,
-            @Query("modifiedSince") Date modifiedSince,
-            @Query("comics") String comics,
-            @Query("series") String series,
-            @Query("events") String events,
-            @Query("orderBy") String orderBy);
+            @Query(Constants.API_LIMIT) int limit,
+            @Query(Constants.API_OFFSET) int offset);
 
     @GET("/v1/public/characters/{characterId}")
     Call<JsonObject> getCharacterByID(
-            @Path("characterId") Integer characterID
+            @Path(Constants.API_CHARACTERID) Integer characterID
     );
 
+    @GET("/v1/public/comics")
+    Call<JsonObject> getComics(
+            @Query(Constants.API_LIMIT) int limit,
+            @Query(Constants.API_OFFSET) int offset);
+
+    @GET("/v1/public/comics/{comicId}")
+    Call<JsonObject> getComicByID(
+            @Path(Constants.API_COMICID) Integer comicID
+    );
+
+    @GET("/v1/public/creators")
+    Call<JsonObject> getCreators(
+            @Query(Constants.API_LIMIT) int limit,
+            @Query(Constants.API_OFFSET) int offset);
+
+    @GET("/v1/public/creators/{creatorId}")
+    Call<JsonObject> getCreatorByID(
+            @Path(Constants.API_CREATORID) Integer creatorID
+    );
+
+    @GET("/v1/public/events")
+    Call<JsonObject> getEvents(
+            @Query(Constants.API_LIMIT) int limit,
+            @Query(Constants.API_OFFSET) int offset);
+
+    @GET("/v1/public/events/{eventId}")
+    Call<JsonObject> getEventByID(
+            @Path(Constants.API_EVENTID) Integer eventID
+    );
 }

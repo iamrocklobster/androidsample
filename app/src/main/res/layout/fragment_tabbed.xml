@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.migueloliveira.androidsample.BaseActivity$PlaceholderFragment">
+    tools:context="com.migueloliveira.androidsample.BaseActivity$PlaceholderFragment"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/section_label"

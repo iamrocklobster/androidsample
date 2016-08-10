@@ -8,6 +8,7 @@ import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -24,4 +25,10 @@ public interface MarvelAPI {
             @Query("series") String series,
             @Query("events") String events,
             @Query("orderBy") String orderBy);
+
+    @GET("/v1/public/characters/{characterId}")
+    Call<JsonObject> getCharacterByID(
+            @Path("characterId") Integer characterID
+    );
+
 }

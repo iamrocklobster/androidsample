@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="characters">Characters</string>
+    <string name="comics">Comics</string>
+    <string name="creators">Creators</string>
+    <string name="events">Events</string>
+    <string name="menu_list">List</string>
+    <string name="menu_grid">Grid</string>
+</resources>

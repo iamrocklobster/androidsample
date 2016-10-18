@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MarvelAPI mMarvelAPI;
+    private static final MarvelAPI mMarvelAPI = ServiceGenerator.createService(MarvelAPI.class);
     private static final String TAG = "BaseActivity";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -56,8 +56,6 @@ public class BaseActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        mMarvelAPI = ServiceGenerator.createService(MarvelAPI.class);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

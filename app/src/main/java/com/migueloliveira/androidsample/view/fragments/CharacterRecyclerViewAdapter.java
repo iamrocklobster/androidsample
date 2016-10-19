@@ -10,30 +10,33 @@ import android.widget.TextView;
 import com.migueloliveira.androidsample.R;
 import com.migueloliveira.androidsample.interfaces.OnCharacterInteractionListener;
 import com.migueloliveira.androidsample.models.Character;
-import com.migueloliveira.androidsample.view.fragments.dummy.DummyContent.DummyItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnCharacterInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<CharacterRecyclerViewAdapter.ViewHolder> {
 
+    public Boolean getmIsGrid() {
+        return mIsGrid;
+    }
+
+    public void setmIsGrid(Boolean mIsGrid) {
+        this.mIsGrid = mIsGrid;
+    }
+
+    private static Boolean mIsGrid = false;
     private final List<Character> mValues;
     private final OnCharacterInteractionListener mListener;
 
-    public CharacterRecyclerViewAdapter(List<Character> items, OnCharacterInteractionListener listener) {
+    public CharacterRecyclerViewAdapter(List<Character> items, OnCharacterInteractionListener listener, Boolean pIsGrid) {
         mValues = items;
         mListener = listener;
+        mIsGrid = pIsGrid;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.element_character_list, parent, false);
+                .inflate(!mIsGrid ? R.layout.element_character_list : R.layout.element_character_grid, parent, false);
         return new ViewHolder(view);
     }
 
@@ -42,7 +45,9 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
         holder.mCharacter = mValues.get(position);
 
         holder.mName.setText(mValues.get(position).getName());
-        holder.mDescription.setText(mValues.get(position).getDescription());
+        if (holder.mDescription != null) {
+            holder.mDescription.setText(mValues.get(position).getDescription());
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

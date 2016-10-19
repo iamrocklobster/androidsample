@@ -17,7 +17,6 @@ import com.migueloliveira.androidsample.interfaces.OnCharacterInteractionListene
 import com.migueloliveira.androidsample.models.Character;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
-import com.migueloliveira.androidsample.view.fragments.dummy.DummyContent;
 
 import java.util.ArrayList;
 
@@ -33,20 +32,14 @@ import retrofit2.Response;
  */
 public class CharacterFragment extends Fragment {
 
+    private static  final String KEY_LAYOUT_MANAGER = "layoutManager";
     private OnCharacterFragmentInteractionListener mListener;
     private static final MarvelAPI mMarvelAPI = ServiceGenerator.createService(MarvelAPI.class);
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public CharacterFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static CharacterFragment newInstance() {
-
         return new CharacterFragment();
     }
 
@@ -60,7 +53,7 @@ public class CharacterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_character, container, false);
 
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        final RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         final ArrayList<Character> characterArrayList = new ArrayList<>();
@@ -86,7 +79,8 @@ public class CharacterFragment extends Fragment {
                         public void onClick(Character character) {
                             Log.e("_DEBUG_",character.toString());
                         }
-                    });
+                    },
+                    Boolean.FALSE);
                     recyclerView.setAdapter(adapter);
                 }
             }

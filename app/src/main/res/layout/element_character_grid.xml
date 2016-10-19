@@ -12,14 +12,14 @@
     >
 
     <ImageView
-        android:id="@+id/item_icon"
+        android:id="@+id/character_icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/ic_menu_gallery"
         android:layout_gravity="center"/>
 
     <TextView
-        android:id="@+id/item_name"
+        android:id="@+id/character_name"
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_gravity="bottom"
@@ -27,8 +27,8 @@
         android:textSize="13sp"
         android:textColor="#FFFFFF"
         android:gravity="center_vertical"
-        android:singleLine="true"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:background="#8C000000"/>
+        android:background="#8C000000"
+        android:maxLines="1" />
 </android.support.v7.widget.CardView>

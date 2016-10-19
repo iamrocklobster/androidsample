@@ -1,4 +1,4 @@
-package com.migueloliveira.androidsample;
+package com.migueloliveira.androidsample.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,17 +23,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
+import com.migueloliveira.androidsample.R;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
+import com.migueloliveira.androidsample.view.fragments.CharacterFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BaseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CharacterFragment.OnCharacterFragmentInteractionListener {
 
-    private static final MarvelAPI mMarvelAPI = ServiceGenerator.createService(MarvelAPI.class);
     private static final String TAG = "BaseActivity";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -61,20 +62,7 @@ public class BaseActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<JsonObject> getCharacters = mMarvelAPI.getCharacters(100,0);
-                getCharacters.enqueue(new Callback<JsonObject>() {
-                    @Override
-                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                        Log.e(TAG,"code: "+ response.code());
-                        Log.e(TAG,"message: "+ response.message());
-                        Log.e(TAG,"body: "+ response.body());
-                    }
 
-                    @Override
-                    public void onFailure(Call<JsonObject> call, Throwable t) {
-
-                    }
-                });
             }
         });
 
@@ -132,10 +120,6 @@ public class BaseActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_comics) {
 
-        } else if (id == R.id.nav_creators) {
-
-        } else if (id == R.id.nav_events) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -143,43 +127,9 @@ public class BaseActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onCharacterFragmentShow() {
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        private RecyclerView mRecyclerView;
-        private RecyclerView.LayoutManager mLayoutManager;
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
     }
 
 
@@ -187,7 +137,7 @@ public class BaseActivity extends AppCompatActivity
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter implements CharacterFragment.OnCharacterFragmentInteractionListener{
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -197,12 +147,12 @@ public class BaseActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return CharacterFragment.newInstance();
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
 
         @Override
@@ -212,12 +162,13 @@ public class BaseActivity extends AppCompatActivity
                     return getResources().getString(R.string.characters);
                 case 1:
                     return getResources().getString(R.string.comics);
-                case 2:
-                    return getResources().getString(R.string.creators);
-                case 3:
-                    return getResources().getString(R.string.events);
             }
             return null;
+        }
+
+        @Override
+        public void onCharacterFragmentShow() {
+
         }
     }
 }

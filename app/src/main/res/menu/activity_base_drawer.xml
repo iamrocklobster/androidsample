@@ -10,14 +10,6 @@
             android:id="@+id/nav_comics"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/comics" />
-        <item
-            android:id="@+id/nav_creators"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/creators" />
-        <item
-            android:id="@+id/nav_events"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/events" />
     </group>
 
 </menu>

@@ -5,7 +5,7 @@ package com.migueloliveira.androidsample.utils;
  */
 public final class Constants {
     public static final String API_PUBLIC = "ed2c4f3bc6f33a7c0df0e46acf64fd7f";
-    public static final String API_PRIVATE = "";
+    public static final String API_PRIVATE = "1db69e7e1b1d604bc4892652bd4a593e7230ffd6";
 
     /**
      * MarvelAPI Constants

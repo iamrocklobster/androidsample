@@ -33,7 +33,6 @@ import retrofit2.Response;
  */
 public class CharacterFragment extends Fragment {
 
-    private static  final String KEY_LAYOUT_MANAGER = "layoutManager";
     private OnCharacterFragmentInteractionListener mListener;
     private static final MarvelAPI mMarvelAPI = ServiceGenerator.createService(MarvelAPI.class);
 
@@ -79,8 +78,7 @@ public class CharacterFragment extends Fragment {
                         public void onClick(Character character) {
                             Log.e("_DEBUG_",character.toString());
                         }
-                    },
-                    Boolean.FALSE);
+                    });
                     recyclerView.setAdapter(adapter);
                 }
             }

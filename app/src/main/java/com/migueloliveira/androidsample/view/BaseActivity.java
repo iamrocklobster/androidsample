@@ -106,9 +106,7 @@ public class BaseActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_grid:
-                return true;
-            case R.id.action_list:
+            case R.id.action_camera:
                 return true;
         }
 
@@ -122,9 +120,9 @@ public class BaseActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_characters) {
-            // Handle the camera action
+            mViewPager.setCurrentItem(0);
         } else if (id == R.id.nav_comics) {
-
+            mViewPager.setCurrentItem(1);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -73,7 +73,7 @@ public class ComicFragment extends Fragment {
                         public void onClick(Comic comic) {
                             Log.e("_DEBUG_",comic.toString());
                         }
-                    }, Boolean.FALSE);
+                    });
                     recyclerView.setAdapter(adapter);
                 }
             }

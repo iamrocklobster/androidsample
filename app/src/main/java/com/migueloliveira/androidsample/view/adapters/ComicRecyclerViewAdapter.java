@@ -22,28 +22,18 @@ import java.util.List;
 
 public class ComicRecyclerViewAdapter extends RecyclerView.Adapter<ComicRecyclerViewAdapter.ViewHolder> {
 
-    public Boolean getmIsGrid() {
-        return mIsGrid;
-    }
-
-    public void setmIsGrid(Boolean mIsGrid) {
-        this.mIsGrid = mIsGrid;
-    }
-
-    private static Boolean mIsGrid = false;
     private final List<Comic> mValues;
     private final OnComicInteractionListener mListener;
 
-    public ComicRecyclerViewAdapter(List<Comic> items, OnComicInteractionListener listener, Boolean pIsGrid) {
+    public ComicRecyclerViewAdapter(List<Comic> items, OnComicInteractionListener listener) {
         mValues = items;
         mListener = listener;
-        mIsGrid = pIsGrid;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(!mIsGrid ? R.layout.element_comic_list : R.layout.element_comic_grid, parent, false);
+                .inflate(R.layout.element_comic_list, parent, false);
         return new ViewHolder(view);
     }
 

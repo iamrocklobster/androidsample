@@ -65,7 +65,7 @@ public class ServiceGenerator {
         });
 
         httpClient.networkInterceptors().add(new StethoInterceptor());
-        //httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
 
         OkHttpClient client = httpClient.build();

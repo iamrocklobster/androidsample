@@ -15,28 +15,18 @@ import java.util.List;
 
 public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<CharacterRecyclerViewAdapter.ViewHolder> {
 
-    public Boolean getmIsGrid() {
-        return mIsGrid;
-    }
-
-    public void setmIsGrid(Boolean mIsGrid) {
-        this.mIsGrid = mIsGrid;
-    }
-
-    private static Boolean mIsGrid = false;
     private final List<Character> mValues;
     private final OnCharacterInteractionListener mListener;
 
-    public CharacterRecyclerViewAdapter(List<Character> items, OnCharacterInteractionListener listener, Boolean pIsGrid) {
+    public CharacterRecyclerViewAdapter(List<Character> items, OnCharacterInteractionListener listener) {
         mValues = items;
         mListener = listener;
-        mIsGrid = pIsGrid;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(!mIsGrid ? R.layout.element_character_list : R.layout.element_character_grid, parent, false);
+                .inflate(R.layout.element_character_list, parent, false);
         return new ViewHolder(view);
     }
 

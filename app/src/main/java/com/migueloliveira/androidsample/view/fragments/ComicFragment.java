@@ -1,6 +1,7 @@
 package com.migueloliveira.androidsample.view.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,11 +14,11 @@ import android.view.ViewGroup;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.migueloliveira.androidsample.R;
-import com.migueloliveira.androidsample.interfaces.OnCharacterInteractionListener;
-import com.migueloliveira.androidsample.models.Character;
+import com.migueloliveira.androidsample.interfaces.OnComicInteractionListener;
+import com.migueloliveira.androidsample.models.Comic;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
-import com.migueloliveira.androidsample.view.adapters.CharacterRecyclerViewAdapter;
+import com.migueloliveira.androidsample.view.adapters.ComicRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -25,23 +26,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnCharacterFragmentInteractionListener}
- * interface.
- */
-public class CharacterFragment extends Fragment {
-
+public class ComicFragment extends Fragment {
     private static  final String KEY_LAYOUT_MANAGER = "layoutManager";
-    private OnCharacterFragmentInteractionListener mListener;
+    private OnComicFragmentInteractionListener mListener;
     private static final MarvelAPI mMarvelAPI = ServiceGenerator.createService(MarvelAPI.class);
 
-    public CharacterFragment() {
+    public ComicFragment() {
     }
 
-    public static CharacterFragment newInstance() {
-        return new CharacterFragment();
+    public static ComicFragment newInstance() {
+        return new ComicFragment();
     }
 
     @Override
@@ -52,35 +46,34 @@ public class CharacterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_character, container, false);
+        View view = inflater.inflate(R.layout.fragment_comic, container, false);
 
         final RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
-        Call<JsonObject> getCharacters = mMarvelAPI.getCharacters(100,0);
-        getCharacters.enqueue(new Callback<JsonObject>() {
+        Call<JsonObject> getComics = mMarvelAPI.getComics(100,0);
+        getComics.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                ArrayList<Character> characterArrayList = new ArrayList<>();
+                ArrayList<Comic> comicArrayList = new ArrayList<>();
                 if (response.isSuccessful()) {
                     JsonObject data = response.body().getAsJsonObject("data");
                     JsonArray results = data.getAsJsonArray("results");
                     for (int i = 0; i < results.size(); i++) {
-                        JsonObject character = results.get(i).getAsJsonObject();
-                        Integer cId = character.get("id").getAsInt();
-                        String cName = character.get("name").getAsString();
-                        String cDescription = character.get("description").getAsString();
-                        String cThumbnail = character.get("thumbnail").getAsJsonObject().get("path").getAsString();
-                        Character fChar = new Character(cId, cName, cDescription, cThumbnail);
-                        characterArrayList.add(fChar);
+                        JsonObject comic = results.get(i).getAsJsonObject();
+                        Integer cId = comic.get("id").getAsInt();
+                        String cName = comic.get("title").getAsString();
+                        String cDescription = comic.get("variantDescription").getAsString();
+                        String cThumbnail = comic.get("thumbnail").getAsJsonObject().get("path").getAsString();
+                        Comic fComic = new Comic(cId, cName, cDescription, cThumbnail);
+                        comicArrayList.add(fComic);
                     }
-                    CharacterRecyclerViewAdapter adapter = new CharacterRecyclerViewAdapter(characterArrayList, new OnCharacterInteractionListener() {
+                    ComicRecyclerViewAdapter adapter = new ComicRecyclerViewAdapter(comicArrayList, new OnComicInteractionListener() {
                         @Override
-                        public void onClick(Character character) {
-                            Log.e("_DEBUG_",character.toString());
+                        public void onClick(Comic comic) {
+                            Log.e("_DEBUG_",comic.toString());
                         }
-                    },
-                    Boolean.FALSE);
+                    }, Boolean.FALSE);
                     recyclerView.setAdapter(adapter);
                 }
             }
@@ -97,11 +90,11 @@ public class CharacterFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnCharacterFragmentInteractionListener) {
-            mListener = (OnCharacterFragmentInteractionListener) context;
+        if (context instanceof OnComicFragmentInteractionListener) {
+            mListener = (OnComicFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnCharacterFragmentInteractionListener");
+                    + " must implement OnComicFragmentInteractionListener");
         }
     }
 
@@ -111,7 +104,7 @@ public class CharacterFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnCharacterFragmentInteractionListener {
-        void onCharacterFragmentShow();
+    public interface OnComicFragmentInteractionListener {
+        void onComicFragmentShow();
     }
 }

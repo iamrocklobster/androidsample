@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,16 +25,20 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.migueloliveira.androidsample.R;
+import com.migueloliveira.androidsample.models.Comic;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
 import com.migueloliveira.androidsample.view.fragments.CharacterFragment;
+import com.migueloliveira.androidsample.view.fragments.ComicFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BaseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CharacterFragment.OnCharacterFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CharacterFragment.OnCharacterFragmentInteractionListener,
+        ComicFragment.OnComicFragmentInteractionListener {
 
     private static final String TAG = "BaseActivity";
 
@@ -132,12 +137,16 @@ public class BaseActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onComicFragmentShow() {
+
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter implements CharacterFragment.OnCharacterFragmentInteractionListener{
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -145,9 +154,15 @@ public class BaseActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return CharacterFragment.newInstance();
+            switch (position) {
+                case 0:
+                    return CharacterFragment.newInstance();
+                case 1:
+                    return ComicFragment.newInstance();
+                default:
+                    return CharacterFragment.newInstance();
+            }
+
         }
 
         @Override
@@ -164,11 +179,6 @@ public class BaseActivity extends AppCompatActivity
                     return getResources().getString(R.string.comics);
             }
             return null;
-        }
-
-        @Override
-        public void onCharacterFragmentShow() {
-
         }
     }
 }

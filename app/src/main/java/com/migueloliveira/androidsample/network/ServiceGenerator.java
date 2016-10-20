@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -42,12 +43,13 @@ public class ServiceGenerator {
                 okhttp3.Request request;
 
                 long timeStamp = System.currentTimeMillis();
-                String toHash = timeStamp + Constants.API_PRIVATE + Constants.API_PUBLIC;
+                String toHash = String.valueOf(timeStamp) + Constants.API_PRIVATE + Constants.API_PUBLIC;
+                Log.e("_DEBUG_","timestamp: " + String.valueOf(timeStamp));
 
                 HttpUrl url = original.url().newBuilder()
-                        .addQueryParameter(QUERY_TS, String.valueOf(timeStamp))
-                        .addQueryParameter(QUERY_APIKEY, Constants.API_PUBLIC)
-                        .addQueryParameter(QUERY_HASH, HashUtils.md5(toHash)).build();
+                        .setQueryParameter(QUERY_TS, String.valueOf(timeStamp))
+                        .setQueryParameter(QUERY_APIKEY, Constants.API_PUBLIC)
+                        .setQueryParameter(QUERY_HASH, HashUtils.md5(toHash)).build();
 
                 try {
                     request = original.newBuilder()
@@ -62,8 +64,8 @@ public class ServiceGenerator {
             }
         });
 
-        // Must uncomment gradle file && application.java lines to enable this
         httpClient.networkInterceptors().add(new StethoInterceptor());
+        //httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
 
         OkHttpClient client = httpClient.build();

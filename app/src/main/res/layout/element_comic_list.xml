@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="4dp"
+    app:cardCornerRadius="2dp"
+    android:background="?attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/comic_icon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_menu_gallery" />
+
+        <TextView
+            android:id="@+id/comic_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/comic_icon"
+            android:layout_alignTop="@+id/comic_icon"
+            android:layout_marginLeft="12dp"
+            android:paddingRight="16dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#cc000000"
+            android:textSize="16sp"
+            android:text="001_bulbasaur.png"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/comic_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/comic_name"
+            android:layout_below="@+id/comic_name"
+            android:paddingRight="16dp"
+            android:text="133.05 MB | 14 SET 2015 | 15:15"
+            android:layout_marginBottom="4dp"
+            android:textColor="#8a000000"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

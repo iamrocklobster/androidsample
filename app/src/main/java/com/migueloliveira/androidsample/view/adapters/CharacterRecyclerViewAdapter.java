@@ -1,4 +1,4 @@
-package com.migueloliveira.androidsample.view.fragments;
+package com.migueloliveira.androidsample.view.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

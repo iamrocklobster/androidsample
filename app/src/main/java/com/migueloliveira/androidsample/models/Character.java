@@ -8,6 +8,7 @@ public class Character {
     private Integer id;
     private String name;
     private String description;
+    private String thumbnail;
     private String thumbnailExtension;
 
     public Character(Integer id, String name, String description, String thumbnail, String thumbnailExtension) {
@@ -54,7 +55,6 @@ public class Character {
         this.description = description;
     }
 
-    private String thumbnail;
 
     @Override
     public String toString() {

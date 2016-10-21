@@ -7,5 +7,6 @@ import com.migueloliveira.androidsample.models.Character;
  */
 
 public interface OnCharacterInteractionListener {
-    public void onClick(Character character);
+    void onClick(Character character);
+    void onLongPress(Character character);
 }

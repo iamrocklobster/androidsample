@@ -3,14 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:padding="4dp"
-    app:cardCornerRadius="2dp"
+    android:layout_height="130dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="2dp"
     android:background="?attr/selectableItemBackground">
 
     <RelativeLayout
+        android:id="@+id/comic_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
@@ -18,39 +21,54 @@
         android:background="?attr/selectableItemBackground">
 
         <ImageView
+            android:id="@+id/comic_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.3"
+            />
+
+        <ImageView
             android:id="@+id/comic_icon"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:padding="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/ic_menu_gallery" />
 
-        <TextView
-            android:id="@+id/comic_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/comic_icon"
-            android:layout_alignTop="@+id/comic_icon"
-            android:layout_marginLeft="12dp"
             android:paddingRight="16dp"
-            android:layout_marginTop="5dp"
-            android:textColor="#cc000000"
-            android:textSize="16sp"
-            android:text="001_bulbasaur.png"
-            android:maxLines="1" />
+            android:paddingLeft="16dp"
+            android:layout_below="@+id/comic_icon"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/comic_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/comic_name"
-            android:layout_below="@+id/comic_name"
-            android:paddingRight="16dp"
-            android:text="133.05 MB | 14 SET 2015 | 15:15"
-            android:layout_marginBottom="4dp"
-            android:textColor="#8a000000"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/comic_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="#cc000000"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"
+                android:text="001_bulbasaur.png"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/comic_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="133.05 MB | 14 SET 2015 | 15:15"
+                android:layout_marginBottom="4dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#8a000000"
+                android:textSize="12sp"
+                android:maxLines="2"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

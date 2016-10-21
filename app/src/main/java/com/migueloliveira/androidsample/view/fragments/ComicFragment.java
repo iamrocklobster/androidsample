@@ -65,13 +65,19 @@ public class ComicFragment extends Fragment {
                         String cName = comic.get("title").getAsString();
                         String cDescription = comic.get("variantDescription").getAsString();
                         String cThumbnail = comic.get("thumbnail").getAsJsonObject().get("path").getAsString();
-                        Comic fComic = new Comic(cId, cName, cDescription, cThumbnail);
+                        String cExtension = comic.get("thumbnail").getAsJsonObject().get("extension").getAsString();
+                        Comic fComic = new Comic(cId, cName, cDescription, cThumbnail, cExtension);
                         comicArrayList.add(fComic);
                     }
                     ComicRecyclerViewAdapter adapter = new ComicRecyclerViewAdapter(comicArrayList, new OnComicInteractionListener() {
                         @Override
                         public void onClick(Comic comic) {
                             Log.e("_DEBUG_",comic.toString());
+                        }
+
+                        @Override
+                        public void onLongPress(Comic mComic) {
+
                         }
                     });
                     recyclerView.setAdapter(adapter);

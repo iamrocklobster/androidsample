@@ -8,16 +8,22 @@ public class Character {
     private Integer id;
     private String name;
     private String description;
+    private String thumbnailExtension;
 
-    public Character(Integer id, String name, String description, String thumbnail) {
+    public Character(Integer id, String name, String description, String thumbnail, String thumbnailExtension) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.thumbnail = thumbnail;
+        this.thumbnailExtension = thumbnailExtension;
     }
 
     public String getThumbnail() {
-        return thumbnail;
+        return thumbnail + "/standard_medium" + "." + thumbnailExtension;
+    }
+
+    public String getBackground() {
+        return thumbnail + "/landscape_xlarge" + "." + thumbnailExtension;
     }
 
     public void setThumbnail(String thumbnail) {

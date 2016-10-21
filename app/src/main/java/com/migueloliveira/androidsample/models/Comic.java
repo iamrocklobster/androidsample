@@ -9,13 +9,15 @@ public class Comic {
     private String name;
     private String description;
     private String thumbnail;
+    private String thumbnailExtension;
     private Integer pageCount;
 
-    public Comic(Integer id, String name, String description, String thumbnail) {
+    public Comic(Integer id, String name, String description, String thumbnail, String thumbnailExtension) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.thumbnail = thumbnail;
+        this.thumbnailExtension = thumbnailExtension;
     }
 
     public Integer getId() {
@@ -43,7 +45,11 @@ public class Comic {
     }
 
     public String getThumbnail() {
-        return thumbnail;
+        return thumbnail + "/standard_medium" + "." + thumbnailExtension;
+    }
+
+    public String getBackground() {
+        return thumbnail + "/landscape_incredible" + "." + thumbnailExtension;
     }
 
     public void setThumbnail(String thumbnail) {

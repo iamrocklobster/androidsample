@@ -8,5 +8,6 @@ import com.migueloliveira.androidsample.models.Comic;
  */
 
 public interface OnComicInteractionListener {
-    public void onClick(Comic comic);
+    void onClick(Comic comic);
+    void onLongPress(Comic mComic);
 }

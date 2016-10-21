@@ -5,5 +5,7 @@
     android:name="com.migueloliveira.androidsample.view.fragments.CharacterFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     tools:context="com.migueloliveira.androidsample.view.fragments.CharacterFragment"
     tools:listitem="@layout/element_character_list" />

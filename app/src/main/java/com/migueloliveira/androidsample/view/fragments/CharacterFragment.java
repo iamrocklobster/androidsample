@@ -18,6 +18,7 @@ import com.migueloliveira.androidsample.models.Character;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
 import com.migueloliveira.androidsample.view.adapters.CharacterRecyclerViewAdapter;
+import com.migueloliveira.androidsample.view.custom.CharacterBottomsheet;
 
 import java.util.ArrayList;
 
@@ -70,13 +71,20 @@ public class CharacterFragment extends Fragment {
                         String cName = character.get("name").getAsString();
                         String cDescription = character.get("description").getAsString();
                         String cThumbnail = character.get("thumbnail").getAsJsonObject().get("path").getAsString();
-                        Character fChar = new Character(cId, cName, cDescription, cThumbnail);
+                        String cExtension = character.get("thumbnail").getAsJsonObject().get("extension").getAsString();
+                        Character fChar = new Character(cId, cName, cDescription, cThumbnail, cExtension);
                         characterArrayList.add(fChar);
                     }
                     CharacterRecyclerViewAdapter adapter = new CharacterRecyclerViewAdapter(characterArrayList, new OnCharacterInteractionListener() {
                         @Override
                         public void onClick(Character character) {
                             Log.e("_DEBUG_",character.toString());
+                        }
+
+                        @Override
+                        public void onLongPress(Character character) {
+                            CharacterBottomsheet characterBottomsheet = CharacterBottomsheet.newInstance(character.getId());
+                            characterBottomsheet.show(getActivity().getSupportFragmentManager(), characterBottomsheet.getTag());
                         }
                     });
                     recyclerView.setAdapter(adapter);

@@ -16,4 +16,6 @@ public final class Constants {
     public static final String API_COMICID = "comicId";
     public static final String API_CREATORID = "creatorId";
     public static final String API_EVENTID = "eventId";
+    public static final String BROADCAST_GETCHARACTERS = "com.migueloliveira.androidsample.action.GET_CHARACTERS";
+    public static final String BROADCAST_GETCHARACTERS_EXTRA_LIST = "com.migueloliveira.androidsample.action.GET_CHARACTERS_LIST";
 }

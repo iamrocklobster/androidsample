@@ -25,7 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.CharacterDetailsActivity"></activity>
+        <activity android:name=".view.CharacterDetailsActivity" />
+
+        <service
+            android:name=".network.CharacterIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

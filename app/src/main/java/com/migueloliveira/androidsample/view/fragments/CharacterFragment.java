@@ -1,30 +1,32 @@
 package com.migueloliveira.androidsample.view.fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.migueloliveira.androidsample.R;
 import com.migueloliveira.androidsample.interfaces.OnCharacterInteractionListener;
 import com.migueloliveira.androidsample.models.Character;
+import com.migueloliveira.androidsample.network.CharacterIntentService;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
+import com.migueloliveira.androidsample.utils.Constants;
 import com.migueloliveira.androidsample.view.adapters.CharacterRecyclerViewAdapter;
 import com.migueloliveira.androidsample.view.custom.CharacterBottomsheet;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -34,10 +36,17 @@ import retrofit2.Response;
  */
 public class CharacterFragment extends Fragment {
 
+    private RecyclerView mRecyclerView;
+    private ImageView mNoConnectionIv;
+    private ProgressBar mProgressBar;
+
+    private CharacterFragmentGetCharactersBroadcastReceiver mReceiver;
+
     private OnCharacterFragmentInteractionListener mListener;
     private static final MarvelAPI mMarvelAPI = ServiceGenerator.createService(MarvelAPI.class);
 
     public CharacterFragment() {
+        mReceiver = new CharacterFragmentGetCharactersBroadcastReceiver();
     }
 
     public static CharacterFragment newInstance() {
@@ -54,28 +63,63 @@ public class CharacterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_character, container, false);
 
-        final RecyclerView recyclerView = (RecyclerView) view;
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        mProgressBar.setIndeterminate(true);
 
-        Call<JsonObject> getCharacters = mMarvelAPI.getCharacters(100,0);
-        getCharacters.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                ArrayList<Character> characterArrayList = new ArrayList<>();
-                if (response.isSuccessful()) {
-                    JsonObject data = response.body().getAsJsonObject("data");
-                    JsonArray results = data.getAsJsonArray("results");
-                    for (int i = 0; i < results.size(); i++) {
-                        JsonObject character = results.get(i).getAsJsonObject();
-                        Integer cId = character.get("id").getAsInt();
-                        String cName = character.get("name").getAsString();
-                        String cDescription = character.get("description").getAsString();
-                        String cThumbnail = character.get("thumbnail").getAsJsonObject().get("path").getAsString();
-                        String cExtension = character.get("thumbnail").getAsJsonObject().get("extension").getAsString();
-                        Character fChar = new Character(cId, cName, cDescription, cThumbnail, cExtension);
-                        characterArrayList.add(fChar);
-                    }
-                    CharacterRecyclerViewAdapter adapter = new CharacterRecyclerViewAdapter(characterArrayList, new OnCharacterInteractionListener() {
+        mNoConnectionIv = (ImageView) view.findViewById(R.id.noconnection);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
+
+        IntentFilter intentFilter = new IntentFilter(Constants.BROADCAST_GETCHARACTERS);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, intentFilter);
+        CharacterIntentService.startAction(getActivity());
+
+        return view;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnCharacterFragmentInteractionListener) {
+            mListener = (OnCharacterFragmentInteractionListener) context;
+            mListener.onCharacterFragmentShow();
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnCharacterFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnCharacterFragmentInteractionListener {
+        void onCharacterFragmentShow();
+    }
+
+    private class CharacterFragmentGetCharactersBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mProgressBar.setVisibility(View.GONE);
+            ArrayList<Character> characters = intent.getParcelableArrayListExtra(Constants.BROADCAST_GETCHARACTERS_EXTRA_LIST);
+            if (characters == null) {
+                mNoConnectionIv.setVisibility(View.VISIBLE);
+            } else {
+                if (characters.size() == 0) {
+                    //TODO show emptyLayout;
+                } else {
+                    CharacterRecyclerViewAdapter adapter = new CharacterRecyclerViewAdapter(characters, new OnCharacterInteractionListener() {
                         @Override
                         public void onClick(Character character) {
                             Log.e("_DEBUG_",character.toString());
@@ -87,37 +131,9 @@ public class CharacterFragment extends Fragment {
                             characterBottomsheet.show(getActivity().getSupportFragmentManager(), characterBottomsheet.getTag());
                         }
                     });
-                    recyclerView.setAdapter(adapter);
+                    mRecyclerView.setAdapter(adapter);
                 }
             }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-
-            }
-        });
-        return view;
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnCharacterFragmentInteractionListener) {
-            mListener = (OnCharacterFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnCharacterFragmentInteractionListener");
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnCharacterFragmentInteractionListener {
-        void onCharacterFragmentShow();
     }
 }

@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
     android:name="com.migueloliveira.androidsample.view.fragments.ComicFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
     tools:context="com.migueloliveira.androidsample.view.fragments.ComicFragment"
-    tools:listitem="@layout/element_comic_list" />
+    >
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <ImageView
+        android:id="@+id/noconnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_perm_scan_wifi_black_48dp"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/list"
+        android:name="com.migueloliveira.androidsample.view.fragments.ComicFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        tools:context="com.migueloliveira.androidsample.view.fragments.ComicFragment"
+        tools:listitem="@layout/element_comic_list"/>
+
+</RelativeLayout>
+
+
+

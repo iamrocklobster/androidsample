@@ -23,6 +23,7 @@ import com.migueloliveira.androidsample.network.CharacterIntentService;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
 import com.migueloliveira.androidsample.utils.Constants;
+import com.migueloliveira.androidsample.view.CharacterDetailsActivity;
 import com.migueloliveira.androidsample.view.adapters.CharacterRecyclerViewAdapter;
 import com.migueloliveira.androidsample.view.custom.CharacterBottomsheet;
 
@@ -122,7 +123,9 @@ public class CharacterFragment extends Fragment {
                     CharacterRecyclerViewAdapter adapter = new CharacterRecyclerViewAdapter(characters, new OnCharacterInteractionListener() {
                         @Override
                         public void onClick(Character character) {
-                            Log.e("_DEBUG_",character.toString());
+                            Intent i = new Intent(getActivity(), CharacterDetailsActivity.class);
+                            i.putExtra(Constants.INTENT_CHARACTER, character);
+                            startActivity(i);
                         }
 
                         @Override

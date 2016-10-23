@@ -18,4 +18,5 @@ public final class Constants {
     public static final String API_EVENTID = "eventId";
     public static final String BROADCAST_GETCHARACTERS = "com.migueloliveira.androidsample.action.GET_CHARACTERS";
     public static final String BROADCAST_GETCHARACTERS_EXTRA_LIST = "com.migueloliveira.androidsample.action.GET_CHARACTERS_LIST";
+    public static final String INTENT_CHARACTER = "characterIntent";
 }

@@ -25,11 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.CharacterDetailsActivity" />
+        <activity
+            android:name=".view.CharacterDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
             android:name=".network.CharacterIntentService"
-            android:exported="false"></service>
+            android:exported="false"/>
     </application>
 
 </manifest>

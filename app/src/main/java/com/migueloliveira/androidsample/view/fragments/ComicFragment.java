@@ -1,6 +1,7 @@
 package com.migueloliveira.androidsample.view.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import com.migueloliveira.androidsample.interfaces.OnComicInteractionListener;
 import com.migueloliveira.androidsample.models.Comic;
 import com.migueloliveira.androidsample.network.MarvelAPI;
 import com.migueloliveira.androidsample.network.ServiceGenerator;
+import com.migueloliveira.androidsample.utils.Constants;
+import com.migueloliveira.androidsample.view.CharacterDetailsActivity;
 import com.migueloliveira.androidsample.view.adapters.ComicRecyclerViewAdapter;
 
 import java.io.IOException;

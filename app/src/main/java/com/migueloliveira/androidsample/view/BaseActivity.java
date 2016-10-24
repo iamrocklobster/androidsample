@@ -141,6 +141,7 @@ public class BaseActivity extends AppCompatActivity
             File photoFile;
             try {
                 photoFile = createImageFile();
+                mCurrentPhotoPath = photoFile.getAbsolutePath();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             } catch (IOException ex) {

@@ -13,6 +13,7 @@ import com.migueloliveira.androidsample.utils.Constants;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -47,7 +48,9 @@ public class CharacterIntentService extends IntentService {
                         String cDescription = character.get("description").getAsString();
                         String cThumbnail = character.get("thumbnail").getAsJsonObject().get("path").getAsString();
                         String cExtension = character.get("thumbnail").getAsJsonObject().get("extension").getAsString();
-                        Character fChar = new Character(cId, cName, cDescription, cThumbnail, cExtension);
+                        String cModified = character.get("modified").getAsString();
+                        String cResource = character.get("resourceURI").getAsString();
+                        Character fChar = new Character(cId, cName, cDescription, cThumbnail, cExtension, cModified, cResource);
                         characterArrayList.add(fChar);
                     }
                 }

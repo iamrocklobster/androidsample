@@ -3,6 +3,11 @@ package com.migueloliveira.androidsample.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by migueloliveira on 19/10/2016.
  */
@@ -13,20 +18,16 @@ public class Character implements Parcelable {
     private String description;
     private String thumbnail;
     private String thumbnailExtension;
-
-    public Character(Integer id, String name, String description, String thumbnail, String thumbnailExtension) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.thumbnail = thumbnail;
-        this.thumbnailExtension = thumbnailExtension;
-    }
+    private String modified;
+    private String resourceURI;
 
     protected Character(Parcel in) {
         name = in.readString();
         description = in.readString();
         thumbnail = in.readString();
         thumbnailExtension = in.readString();
+        modified = in.readString();
+        resourceURI = in.readString();
     }
 
     @Override
@@ -35,6 +36,8 @@ public class Character implements Parcelable {
         dest.writeString(description);
         dest.writeString(thumbnail);
         dest.writeString(thumbnailExtension);
+        dest.writeString(modified);
+        dest.writeString(resourceURI);
     }
 
     @Override
@@ -53,6 +56,31 @@ public class Character implements Parcelable {
             return new Character[size];
         }
     };
+
+    public String getModified() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
+        try {
+            Date date = format.parse(modified);
+            return date.toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
+
+    public Character(Integer id, String name, String description, String thumbnail, String thumbnailExtension, String modified, String resourceURI) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.thumbnailExtension = thumbnailExtension;
+        this.modified = modified;
+        this.resourceURI = resourceURI;
+    }
 
     public String getThumbnail() {
         return thumbnail + "/standard_medium" + "." + thumbnailExtension;
@@ -90,7 +118,6 @@ public class Character implements Parcelable {
         this.description = description;
     }
 
-
     @Override
     public String toString() {
         return "Character{" +
@@ -98,6 +125,9 @@ public class Character implements Parcelable {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
+                ", thumbnailExtension='" + thumbnailExtension + '\'' +
+                ", modified='" + modified + '\'' +
+                ", resourceURI='" + resourceURI + '\'' +
                 '}';
     }
 }
